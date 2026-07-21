@@ -15,6 +15,7 @@ export type HeaderInfo = {
   filename: string,
   author: string,
   createdBy: string,
+  domain: string,
   createdAt: moment.Moment,
   updatedBy: string,
   updatedAt: moment.Moment
@@ -26,13 +27,13 @@ export type HeaderInfo = {
 const genericTemplate = `
 ********************************************************************************
 *                                                                              *
-*                                                         :::      ::::::::    *
-*    $FILENAME__________________________________        :+:      :+:    :+:    *
-*                                                     +:+ +:+         +:+      *
-*    By: $AUTHOR________________________________    +#+  +:+       +#+         *
-*                                                 +#+#+#+#+#+   +#+            *
-*    Created: $CREATEDAT_________ by $CREATEDBY_       #+#    #+#              *
-*    Updated: $UPDATEDAT_________ by $UPDATEDBY_      ###   ########.fr        *
+*                                                       ::::::::  :::::::::::  *
+*    $FILENAME__________________________________      :+:    :+: :+:     :+:   *
+*                                                    +:+               +:+     *
+*    By: $AUTHOR________________________________    +#++:++#+        +#+       *
+*                                                  +#+    +#+      +#+         *
+*    Created: $CREATEDAT_________ by $CREATEDBY_  #+#    #+#     #+#           *
+*    Updated: $UPDATEDAT_________ by $UPDATEDBY_  ########      ###$DOMAIN     *
 *                                                                              *
 ********************************************************************************
 
@@ -121,7 +122,8 @@ export const getHeaderInfo = (header: string): HeaderInfo => ({
   createdBy: getFieldValue(header, 'CREATEDBY'),
   createdAt: parseDate(getFieldValue(header, 'CREATEDAT')),
   updatedBy: getFieldValue(header, 'UPDATEDBY'),
-  updatedAt: parseDate(getFieldValue(header, 'UPDATEDAT'))
+  updatedAt: parseDate(getFieldValue(header, 'UPDATEDAT')),
+  domain: getFieldValue(header, 'DOMAIN')
 })
 
 /**
@@ -133,7 +135,8 @@ export const renderHeader = (languageId: string, info: HeaderInfo) => [
   { name: 'CREATEDAT', value: formatDate(info.createdAt) },
   { name: 'CREATEDBY', value: info.createdBy },
   { name: 'UPDATEDAT', value: formatDate(info.updatedAt) },
-  { name: 'UPDATEDBY', value: info.updatedBy }
+  { name: 'UPDATEDBY', value: info.updatedBy },
+  { name: 'DOMAIN', value: info.domain }
 ].reduce((header, field) =>
   setFieldValue(header, field.name, field.value),
   getTemplate(languageId))

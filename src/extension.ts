@@ -36,12 +36,20 @@ const getCurrentUserMail = () =>
     .get('42header.email') || `${getCurrentUser()}@student.42.fr`
 
 /**
+ * Return current user mail from config or default value
+ */
+const getDomain = () =>
+  vscode.workspace.getConfiguration()
+    .get('42header.domain') || `.fr`
+
+/**
  * Update HeaderInfo with last update author and date, and update filename
  * Returns a fresh new HeaderInfo if none was passed
  */
 const newHeaderInfo = (document: TextDocument, headerInfo?: HeaderInfo) => {
   const user = getCurrentUser()
   const mail = getCurrentUserMail()
+  const domain = getDomain()
 
   return Object.assign({},
     // This will be overwritten if headerInfo is not null
@@ -54,7 +62,8 @@ const newHeaderInfo = (document: TextDocument, headerInfo?: HeaderInfo) => {
       filename: basename(document.fileName),
       author: `${user} <${mail}>`,
       updatedBy: user,
-      updatedAt: moment()
+      updatedAt: moment(),
+      domain: domain
     }
   )
 }

@@ -1,18 +1,18 @@
 {
-  "name": "42header",
-  "displayName": "42 Header",
-  "description": "42 header for VSCode : www.42.fr",
+  "name": "67header",
+  "displayName": "42 - 67 Header",
+  "description": "42/67 Header for VSCode : www.42.fr",
   "version": "0.42.7",
   "publisher": "kube",
-  "icon": "42.png",
+  "icon": "67.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kube/vscode-42header"
+    "url": "https://github.com/hactazia/42-67-header"
   },
   "bugs": {
-    "url": "https://github.com/kube/vscode-42header/issues"
+    "url": "https://github.com/hactazia/42-67-header/issues"
   },
-  "homepage": "https://github.com/kube/vscode-42header",
+  "homepage": "https://github.com/hactazia/42-67-header",
   "license": "MIT",
   "engines": {
     "vscode": "^1.6.0"
@@ -29,18 +29,22 @@
       "properties": {
         "42header.username": {
           "type": "string",
-          "description": "Username to use in 42 headers"
+          "description": "Username to use in 67 headers"
         },
         "42header.email": {
           "type": "string",
-          "description": "Email address to use in 42 headers"
+          "description": "Email address to use in 67 headers"
+        },
+        "42header.domain": {
+          "type": "string",
+          "description": "Domain to use in 67 headers"
         }
       }
     },
     "commands": [
       {
         "command": "42header.insertHeader",
-        "title": "Insert 42 header",
+        "title": "Insert 67 header",
         "when": "editorTextFocus"
       }
     ],
