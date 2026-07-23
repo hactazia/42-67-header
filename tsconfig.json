@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
     "outDir": "out",
     "lib": [
       "es6"
@@ -9,7 +9,8 @@
     "noImplicitAny": true,
     "removeComments": true,
     "sourceMap": true,
-    "rootDir": "."
+    "rootDir": ".",
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules",
