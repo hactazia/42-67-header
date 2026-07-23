@@ -8,6 +8,9 @@ on:
     branches:
       - master
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,11 +34,30 @@ jobs:
       - name: Install VSCE
         run: npm install --global @vscode/vsce
 
+      - name: Set build version
+        if: github.event_name == 'push'
+        run: |
+          BUILD_VERSION="0.42.${{ github.run_number }}"
+          echo "BUILD_VERSION=${BUILD_VERSION}" >> $GITHUB_ENV
+          npm version ${BUILD_VERSION} --no-git-tag-version
+
       - name: Build VSIX
         run: vsce package --no-yarn --allow-star-activation
 
-      - name: Upload VSIX
+      - name: Upload VSIX artifact
         uses: actions/upload-artifact@v4
         with:
           name: vscode-extension
           path: "*.vsix"
+
+      - name: Create GitHub Release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.BUILD_VERSION }}
+          name: Release v${{ env.BUILD_VERSION }}
+          body: |
+            Build #${{ github.run_number }} — commit `${{ github.sha }}`
+
+            Generated automatically by CI.
+          files: "*.vsix"
